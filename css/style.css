@@ -573,7 +573,7 @@ section { padding: 72px 0; }
   .fixed-ticket-btn{width: 56px;height: 56px;bottom: 80px;right: 12px;}
   .fixed-ticket-btn-icon{font-size: 24px;}
   .fixed-ticket-btn-label{font-size: 8px;}
-  .fotter-shisa-img{width: 28px;}
+  .footer-shisa-img { width: 24px !important; height: auto !important; }
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
