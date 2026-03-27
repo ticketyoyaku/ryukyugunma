@@ -570,6 +570,10 @@ section { padding: 72px 0; }
   .gallery-item { flex: 0 0 80%; }
   .news-item { grid-template-columns: 85px 1fr; }
   .news-item .news-badge { display: none; }
+  .fixed-ticket-btn{width: 56px;height: 56px;bottom: 80px;right: 12px;}
+  .fixed-ticket-btn-icon{font-size: 24px;}
+  .fixed-ticket-btn-label{font-size: 8px;}
+  .fotter-shisa-img{width: 28px;}
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -629,8 +633,8 @@ section:nth-child(5) { animation-delay: .2s; }
 /* ━━━ 固定チケットボタン ━━━ */
 .fixed-ticket-btn {
   position: fixed;
-  top: 180px;
-  right: 150px;
+  bottom: 90px;
+  right: 16px;
   z-index: 400;
   background: linear-gradient(135deg, #ffb52b, #ffc31ede);
   color: white;
