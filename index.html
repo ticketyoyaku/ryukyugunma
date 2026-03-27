@@ -15,7 +15,8 @@
     }
     /* スライドショー（全画面・背景の後ろ） */
     .hero-slides { position: absolute; inset: 0; z-index: 0; }
-    .hero-slide  { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; background-size: cover; background-position: center top; }
+    .hero-slide  { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; background-size: contain
+      ; background-position: center center;background-color: #000; }
     .hero-slide.active { opacity: 1; }
     .hero-slide::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
