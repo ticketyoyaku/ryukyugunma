@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TICKET | 第3回 琉球の風〜沖縄祭りIN高崎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+  .ticket-area-img { width:100%; border-radius:10px; overflow:hidden; border:2px solid rgba(200,150,58,.3); box-shadow:0 4px 20px rgba(0,0,0,.1); }
+  .buy-card { display:flex; align-items:center; gap:14px; background:rgba(255,255,255,.75); backdrop-filter:blur(6px); border:1.5px solid rgba(200,150,58,.2); border-radius:8px; padding:18px; text-decoration:none; color:#1a2a1a; transition:transform .2s,box-shadow .2s; }
+  .buy-card:hover { transform:translateY(-3px); box-shadow:0 6px 22px rgba(200,150,58,.2); }
+  .buy-icon { font-size:30px; }
+  .buy-name { font-size:15px; font-weight:900; display:block; }
+  .buy-link { font-size:11px; color:#e8452a; font-weight:700; margin-top:2px; }
+  .ticket-notes-list li { font-size:13px; color:#555; padding:8px 0; border-bottom:1px solid rgba(200,150,58,.15); display:flex; gap:8px; line-height:1.8; }
+  .ticket-notes-list li::before { content:"●"; color:#e8452a; font-size:9px; flex-shrink:0; margin-top:4px; }
+
+  /* ━━━ STEPスタイル ━━━ */
+  .step-block {
+    background: rgba(255,255,255,.8);
+    backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(13,197,217,.25);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  .step-header {
+    background: linear-gradient(135deg, #0dc5d9, #0099b0);
+    padding: 13px 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: 2px;
+    background: rgba(255,255,255,.25);
+    color: white; padding: 3px 12px;
+    border-radius: 3px; white-space: nowrap;
+    border: 1px solid rgba(255,255,255,.4);
+  }
+  .step-title {
+    font-size: 15px; font-weight: 900;
+    color: white; letter-spacing: 1px;
+  }
+  .step-body { padding: 22px 24px; }
+  .step-lead { font-size: 13px; color: #555; line-height: 1.8; margin-bottom: 18px; }
+  .step-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(200,150,58,.12);
+}
+  .step-btn {
+   min-width: 200px;
+   justify-content: center;
+   }
+  
+  .step-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .step-row-label { font-size: 13px; font-weight: 700; color: #1a2a1a; min-width: 120px; flex-shrink: 0; line-height: 1.7; }
+  .step-btn {
+    display: inline-flex; align-items: center; gap: 18px;
+    padding: 10px 24px; border-radius: 6px;
+    font-size: 13px; font-weight: 900; letter-spacing: 1px;
+    text-decoration: none; transition: opacity .2s, transform .2s;
+    white-space: nowrap;
+  }
+  .step-btn:hover { opacity: .88; transform: translateY(-2px); }
+  .step-btn-gold { background: linear-gradient(135deg, #d4943a, #ffba59); color: white; box-shadow: 0 3px 12px rgba(200,150,58,.35);
+                   font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; font-size: 15px; }
+  .step-btn-blue { background: linear-gradient(135deg, #0090d4, #005fa0); color: white; box-shadow: 0 3px 12px rgba(0,144,212,.3); }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .step-list li { display: flex; flex-direction: column; gap: 3px; }
+  .step-list-title { font-size: 14px; font-weight: 700; color: #1a2a1a; display: flex; align-items: center; gap: 7px; }
+  .step-list-title::before { content: '●'; color: #0dc5d9; font-size: 9px; flex-shrink: 0; }
+  .step-list-desc { font-size: 12px; color: #666; line-height: 1.75; padding-left: 18px; }
+
+  #ticket-cards {
+  display: flex; 
+  justify-content: center;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+　.step-row {
+  justify-content: space-between;
+  align-items: center;
+}
+　.step-btn {
+  min-width: 200px;
+  justify-content: center;
+}
+
+  /* お問い合わせボタン */
+  .contact-section { text-align: center; padding: 48px 24px; }
+  .contact-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #f7c319, #fcb212);
+    color: rgb(255, 255, 255); padding: 16px 48px;
+    border-radius: 6px; font-size: 14px; font-weight: 900; letter-spacing: 5px;
+    border: 1px solid rgba(200,150,58,.3);
+    transition: box-shadow .2s, transform .2s;
+    text-decoration: none;
+  }
+  .contact-btn:hover { box-shadow: 0 6px 24px rgba(200,150,58,.35); transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    .step-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .step-row-label { min-width: unset; }
+    .step-header { padding: 11px 16px; }
+    .step-body { padding: 16px; }
+  }
+</style>
+</head>
+<body class="subpage">
+
+<header id="site-header"></header>
+<div id="mobile-menu"></div>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <h1 class="page-title-en">TICKET</h1>
+    <p class="page-title-ja"> \ チケット情報 / </p>
+  </div>
+</div>
+
+
+<section class="glass-section">
+  <div class="container">
+    <p class="section-label reveal">Ticket</p>
+    <h2 class="section-title reveal">チケット<em>種類</em></h2>
+    <!-- エリア画像 -->
+    <div class="reveal" id="area-img-wrap" style="margin-top:28px;max-width:700px;margin-left:auto;margin-right:auto;"></div>
+    <!-- チケットカード -->
+    <div class="ticket-cards reveal" id="ticket-cards" style="justify-content:center;display:flex;margin-left:auto;margin-right:auto;max-width:760px;"></div>
+  </div>
+</section>
+
+<!-- モーダル -->
+<div class="modal-overlay" id="ticket-modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close">✕</button>
+    <h3 id="modal-title" style="font-size:20px;font-weight:900;color:#1a2a1a;margin-bottom:12px;"></h3>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<section class="glass-section-alt">
+  <div class="container">
+    <p class="section-label reveal">How to Buy</p>
+    <h2 class="section-title reveal">💰購入<em>方法</em></h2>
+
+    <!-- STEP 1 -->
+    <div class="step-block reveal">
+      <div class="step-header">
+        <span class="step-num">STEP 1</span>
+        <span class="step-title">支払い方法を選ぶ</span>
+      </div>
+      <div class="step-body">
+        <p class="step-lead">ご希望の支払い方法に合わせて、以下のいずれかのボタンを選んでください。</p>
+        <div class="step-row">
+          <span class="step-row-label">銀行振込等ご希望の方</span>
+          <a href="#" id="btn-official" class="step-btn step-btn-gold">OFFICIAL FORM</a>
+        </div>
+        <div class="step-row">
+          <span class="step-row-label">クレジットカード・コンビニ決済をご希望の方</span>
+          <a href="#" id="btn-pia" style="display:inline-flex;justify-content:center;border:none;outline:none;margin-left:auto;">
+           <img src="../images/ticketpia.png" alt="チケットぴあ" style="height:44px;width:auto;display:block;border:2px solid #0090d4;border-radius:6px;">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-block reveal">
+      <div class="step-header">
+        <span class="step-num">STEP 2</span>
+        <span class="step-title">お申し込み</span>
+      </div>
+      <div class="step-body">
+        <ul class="step-list">
+          <li>
+            <span class="step-list-title">チケットぴあ</span>
+            <span class="step-list-desc">外部サイトへ移動します。画面の指示に従ってお支払い・発券を行ってください。</span>
+          </li>
+          <li>
+            <span class="step-list-title">公式フォーム</span>
+            <span class="step-list-desc">必要事項を入力して送信してください。後ほど事務局より振込先等の詳細メールをお送りいたします。</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-block reveal">
+      <div class="step-header">
+        <span class="step-num">STEP 3</span>
+        <span class="step-title">チケットの受け取り</span>
+      </div>
+      <div class="step-body">
+        <ul class="step-list">
+          <li>
+            <span class="step-list-title">チケットぴあ</span>
+            <span class="step-list-desc">購入完了後、チケットぴあよりチケットを発行します。コンビニ発券またはスマートフォン表示にてご入場ください。</span>
+          </li>
+          <li>
+            <span class="step-list-title">公式フォーム（銀行振込）</span>
+            <span class="step-list-desc">ご入金確認後、事務局より電子チケット（PDF）をメールでお送りします。当日は印刷またはスマートフォンでご提示ください。</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="glass-section" style="background:rgba(255, 255, 255, 0.801);">
+  <div class="container">
+    <p class="section-label reveal">Notes</p>
+    <h2 class="section-title reveal">注意<em>事項</em></h2>
+    <ul class="reveal" id="ticket-notes" style="margin-top:24px;"></ul>
+  </div>
+</section>
+
+<section class="glass-section-alt">
+  <div class="contact-section reveal">
+    <p style="font-size:13px;color:#888;margin-bottom:16px;letter-spacing:1px;">チケットに関するお問い合わせ</p>
+    <a href="mailto:info@ryukyunokaze.jp" class="contact-btn">
+      ✉️　お問い合わせはこちら
+    </a>
+    <p style="font-size:11px;color:#aaa;margin-top:14px;">info@ryukyunokaze.jp</p>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+<button id="back-to-top" title="ページトップへ">↑</button>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function() {
+  var tickets = SITE_DATA.tickets || [];
+  var tc = document.getElementById('ticket-cards');
+  var modal = document.getElementById('ticket-modal');
+  var modalClose = document.getElementById('modal-close');
+
+  // エリア画像
+  var areaWrap = document.getElementById('area-img-wrap');
+  if (areaWrap && tickets.length && tickets[0].areaImg) {
+    var img = document.createElement('img');
+    img.src = '../' + tickets[0].areaImg;
+    img.alt = 'エリアマップ';
+    img.className = 'ticket-area-img';
+    img.onerror = function(){ this.style.display='none'; };
+    areaWrap.appendChild(img);
+  }
+
+  // チケットカード
+  if (tc) {
+    tc.innerHTML = tickets.map(function(t,i) {
+      return '<div class="ticket-card'+(t.popular?' popular':'')+'">'+
+        (t.popular?'<div class="ticket-popular-badge">⭐ POPULAR</div>':'')+
+        '<div class="ticket-type">'+t.typeEn+'</div>'+
+        '<div class="ticket-price"><sup>¥</sup>'+t.price+'</div>'+
+        '<div class="ticket-note">'+t.note+'</div>'+
+        '<ul class="ticket-features">'+t.features.map(function(f){return'<li>'+f+'</li>';}).join('')+'</ul>'+
+        '<button class="ticket-btn ticket-btn-outline" onclick="openModal('+i+')" style="margin-bottom:8px;">エリア詳細を見る</button>'+
+        (t.url?'<a href="'+t.url+'" target="_blank" class="ticket-btn ticket-btn-primary">購入する</a>':
+          '')+
+        '</div>';
+    }).join('');
+  }
+
+  // モーダル
+  window.openModal = function(i) {
+    var t = tickets[i];
+    document.getElementById('modal-title').textContent = t.type;
+    document.getElementById('modal-body').innerHTML =
+      '<p style="font-size:14px;color:#555;margin-bottom:16px;">'+t.note+'</p>'+
+      '<ul style="list-style:none;">'+t.features.map(function(f){return'<li style="padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px;">✦ '+f+'</li>';}).join('')+'</ul>';
+    modal.classList.add('open');
+  };
+  modalClose.onclick = function() { modal.classList.remove('open'); };
+  modal.onclick = function(e) { if(e.target===this) this.classList.remove('open'); };
+
+  // STEPボタンのURL設定
+  var urls = SITE_DATA.ticketUrls || {};
+  var btnOfficial = document.getElementById('btn-official');
+  var btnPia      = document.getElementById('btn-pia');
+  if (btnOfficial && urls.officialForm) btnOfficial.href = urls.officialForm;
+  if (btnPia      && urls.pia)          btnPia.href      = urls.pia;
+
+  // 注意事項
+
+  var tn = document.getElementById('ticket-notes');
+  var notes = SITE_DATA.ticketNotes || [];
+  if (tn) tn.className = 'ticket-notes-list'; 
+  if (tn && notes.length) {
+    tn.innerHTML = notes.map(function(n){return'<li>'+n+'</li>';}).join('');
+  }
+});</script>
+</body>
+</html>

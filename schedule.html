@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMETABLE | 第3回 琉球の風〜沖縄祭りIN高崎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+  .schedule-list { margin-top:28px; display:flex; flex-direction:column; gap:4px; }
+  .schedule-item { display:grid; grid-template-columns:80px 1fr auto; align-items:center; gap:14px; padding:13px 18px; background:rgba(255,255,255,.75); backdrop-filter:blur(6px); border-radius:8px; border-left:3px solid #0dc5d9; transition:border-color .2s,box-shadow .2s; }
+  .schedule-item:hover { border-left-color:#e8452a; box-shadow:0 3px 14px rgba(0,0,0,.08); }
+  .schedule-time { font-family:'Bebas Neue',sans-serif; font-size:20px; color:#0dc5d9; letter-spacing:2px; }
+  .schedule-name { font-weight:600; font-size:13px; color:#1a2a1a; }
+  .schedule-stage { font-size:10px; font-weight:700; letter-spacing:1px; color:white; background:#0099b0; padding:3px 10px; border-radius:3px; white-space:nowrap; }
+</style>
+</head>
+<body class="subpage">
+
+<header id="site-header"></header>
+<div id="mobile-menu"></div>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <h1 class="page-title-en">TIMETABLE</h1>
+    <p class="page-title-ja"> \ タイムテーブル /</p>
+  </div>
+</div>
+
+
+<section class="glass-section">
+  <div class="container">
+    <p class="section-label reveal">Timetable</p>
+    <h2 class="section-title reveal">タイムテーブル</h2>
+    <p class="section-lead reveal" id="schedule-date"></p>
+    <div class="reveal" id="schedule-wrap"></div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+<button id="back-to-top" title="ページトップへ">↑</button>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>document.addEventListener('DOMContentLoaded', function() {
+  var f = SITE_DATA.festival;
+  var sd = document.getElementById('schedule-date');
+  if (sd) sd.textContent = f.date + '　' + f.openTime + ' / ' + f.startTime + ' 〜 ' + f.endTime;
+  var sw = document.getElementById('schedule-wrap');
+  var sched = SITE_DATA.schedule || [];
+  if (sw) {
+    if (sched.length) {
+      sw.innerHTML = '<ul class="schedule-list">'+sched.map(function(s){
+        return '<li class="schedule-item"><span class="schedule-time">'+s.time+'</span><span class="schedule-name">'+s.name+'</span><span class="schedule-stage">'+s.stage+'</span></li>';
+      }).join('')+'</ul>';
+    } else {
+      sw.innerHTML = '<div class="coming-soon"><span class="coming-soon-icon">📋</span><h3>COMING SOON</h3><p>タイムテーブルは決まり次第公開します。</p></div>';
+    }
+  }
+});</script>
+</body>
+</html>

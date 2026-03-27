@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 琉球の風〜沖縄祭りIN高崎 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ━━━ HERO ━━━ */
+    .hero {
+      position: relative; min-height: 100vh; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    /* スライドショー（全画面・背景の後ろ） */
+    .hero-slides { position: absolute; inset: 0; z-index: 0; }
+    .hero-slide  { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; background-size: cover; background-position: center; }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
+      background: linear-gradient(to bottom, transparent, rgba(10,22,40,.6));
+    }
+    /* スライドインジケーター */
+    .hero-dots { position: absolute; bottom: 24px; right: 36px; z-index: 10; display: flex; gap: 8px; }
+    .hero-dot  { width: 9px; height: 9px; border-radius: 50%; background: rgba(200,150,58,.4); border: 1.5px solid #c8963a; cursor: pointer; transition: background .3s, transform .3s; }
+    .hero-dot.active { background: #c8963a; transform: scale(1.3); }
+
+    /* ヘッダー（トップ：ロゴのみ・透過） */
+    .hero-header { position: relative; z-index: 20; width: 100%; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .hero-header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .hero-header-logo img { height: 36px; width: auto; object-fit: contain; }
+    .hero-header-logo span { font-family: 'Bebas Neue',sans-serif; font-size: 15px; letter-spacing: 4px; color: rgba(255,255,255,.6); }
+
+    /* ロゴ・テキスト（前面固定） */
+    .hero-content { position: relative; z-index: 10; width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; padding: 0 20px 80px; margin-top: 20px; }
+    .hero-logo-img { max-width: min(1040px, 90vw); height: auto; filter: drop-shadow(0 4px 32px rgba(0,0,0,.4)); animation: fadeUp .9s .1s ease both; }
+    .hero-catch { font-family: 'Noto Sans JP',sans-serif; font-size: clamp(26px,5vw,54px); font-weight: 900; color: white; text-align: center; margin-top: 18px; text-shadow: 0 2px 20px rgba(0,0,0,.6); animation: fadeUp .9s .22s ease both; letter-spacing: 2px; }
+    .hero-catch span { color: #0095f8; text-shadow: 0 0 20px rgb(253, 255, 124); }
+    .hero-catch-sub { font-size: clamp(11px,1.8vw,15px); color: rgba(255,255,255,.85); text-align: center; margin-top: 6px; letter-spacing: 3px; animation: fadeUp .9s .32s ease both; display: flex; align-items: center; gap: 10px; justify-content: center; }
+    .hero-catch-sub::before,.hero-catch-sub::after { content:''; display:block; width:32px; height:1px; background:rgba(200,150,58,.7); }
+    /* 赤いリボン帯 */
+    .hero-ribbon { margin-top: 14px; background: linear-gradient(135deg,#d43520,#e8452a,#d43520); background-size:200%; color: white; font-size: clamp(12px,1.6vw,14px); font-weight: 700; letter-spacing: 4px; padding: 7px 30px; border-radius: 3px; display: flex; align-items: center; gap: 8px; animation: fadeUp .9s .4s ease both, ribbonGlow 3s ease-in-out infinite; box-shadow: 0 3px 16px rgba(232,69,42,.45); position: relative; overflow: hidden; }
+    .hero-ribbon::before { content:''; position:absolute; top:0; left:-100%; width:50%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent); animation: ribbonShine 2.8s ease-in-out infinite .8s; }
+    @keyframes ribbonGlow { 0%,100%{box-shadow:0 3px 16px rgba(232,69,42,.4)} 50%{box-shadow:0 3px 24px rgba(232,69,42,.65)} }
+    @keyframes ribbonShine { 0%{left:-100%} 100%{left:200%} }
+    /* 金の波ライン */
+    .hero-gold-line { width: min(520px,88vw); height: 22px; margin-top: 14px; animation: fadeUp .9s .47s ease both; filter: drop-shadow(0 0 5px rgba(200,150,58,.45)); }
+    .hero-gold-line svg { display: block; width: 100%; height: 100%; }
+    /* 日程バッジ */
+    .hero-date { margin-top: 12px; background: rgba(250,246,238,.88); border: 1.5px solid #c8963a; border-radius: 4px; padding: 10px 22px; font-size: clamp(12px,1.8vw,15px); font-weight: 700; letter-spacing: 2px; color: #1a1a0a; text-align: center; backdrop-filter: blur(8px); box-shadow: 0 2px 12px rgba(200,150,58,.2); animation: fadeUp .9s .52s ease both; }
+    .hero-date strong { color: #e8452a; }
+    /* バナーボタン */
+    .hero-banners { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; animation: fadeUp .9s .6s ease both; }
+    .hero-btn { display: flex; flex-direction: column; align-items: center; gap: 3px; border-radius: 6px; padding: 10px 20px; min-width: 130px; text-decoration: none; color: white; font-weight: 900; position: relative; overflow: hidden; transition: transform .25s, box-shadow .25s; }
+    .hero-btn::after { content:''; position:absolute; top:-50%; left:-60%; width:40%; height:200%; background:linear-gradient(105deg,transparent,rgba(255,255,255,.3),transparent); transform:skewX(-20deg); opacity:0; transition:left .4s,opacity .2s; }
+    .hero-btn:hover::after { left:130%; opacity:1; }
+    .hero-btn:hover { transform: translateY(-3px) scale(1.03); }
+    .hero-btn.teal   { background:linear-gradient(135deg,#0dc5d9,#0099b0); box-shadow:0 4px 14px rgba(13,197,217,.4); }
+    .hero-btn.teal:hover   { box-shadow:0 8px 24px rgba(13,197,217,.55); }
+    .hero-btn.orange { background:linear-gradient(135deg,#fff27fe1,#fff128a8); box-shadow:0 4px 14px rgba(232,69,42,.4); }
+    .hero-btn.orange:hover { box-shadow:0 8px 24px rgba(232,69,42,.55); }
+    .hero-btn.amber  { background:linear-gradient(135deg,#ea66fc9d,#ff2bffb6); box-shadow:0 4px 14px rgba(200,150,58,.4); }
+    .hero-btn.amber:hover  { box-shadow:0 8px 24px rgba(200,150,58,.55); }
+    .hero-btn .btn-label { font-size: 14px; }
+    .hero-btn .btn-sub   { font-size: 10px; opacity: .85; letter-spacing: 1.5px; }
+    .hero-btn .btn-icon  { font-size: 18px; }
+    /* 波形 */
+    .hero-wave { position: absolute; bottom: 0; left: 0; right: 0; z-index: 5; line-height: 0; pointer-events: none; }
+    .hero-wave svg { display: block; width: 100%; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)} }
+
+    /* ━━━ セクション ━━━ */
+    #news     { background: rgba(255,255,255,.55); backdrop-filter: blur(8px); }
+    #pickup   { background: rgba(250,246,238,.6); backdrop-filter: blur(6px); }
+    #menu-nav { background: rgba(255,255,255,.55); backdrop-filter: blur(8px); }
+    #gallery  { background: rgba(250,246,238,.6); backdrop-filter: blur(6px); }
+    #archive  { background: rgba(255,255,255,.55); backdrop-filter: blur(8px); }
+    #sns      { background: rgba(250,246,238,.6); backdrop-filter: blur(6px); }
+    section + section { border-top: 1px solid rgba(200,150,58,.1); }
+
+    /* SNSカード */
+    .sns-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+    .sns-card { display: flex; flex-direction: column; align-items: center; gap: 8px; background: rgba(255,255,255,.75); backdrop-filter: blur(8px); border-radius: 10px; padding: 28px 36px; text-decoration: none; color: #1a2a1a; border: 1.5px solid rgba(200,150,58,.2); transition: transform .25s, box-shadow .25s; min-width: 220px; }
+    .sns-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.1); }
+    .sns-card img { width: 56px; height: 56px; object-fit: contain; }
+    .sns-card-name   { font-size: 15px; font-weight: 700; }
+    .sns-card-handle { font-size: 11px; color: #888; }
+    .sns-card-desc   { font-size: 11px; color: #555; text-align: center; }
+
+    /* アーカイブ */
+    .yt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 28px; }
+    .yt-card { background: rgba(255,255,255,.7); backdrop-filter: blur(6px); border-radius: 10px; overflow: hidden; border: 1.5px solid rgba(200,150,58,.15); transition: transform .3s, box-shadow .3s; cursor: pointer; }
+    .yt-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .yt-thumb { position: relative; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+    .yt-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.15); }
+    .yt-play-btn { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,0,0,.9); display: flex; align-items: center; justify-content: center; transition: transform .2s; }
+    .yt-card:hover .yt-play-btn { transform: scale(1.1); }
+    .yt-play-btn::after { content:''; border-style:solid; border-width:9px 0 9px 18px; border-color:transparent transparent transparent white; margin-left:3px; }
+    .yt-info { padding: 12px 14px; }
+    .yt-year  { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: #0dc5d9; margin-bottom: 3px; }
+    .yt-title { font-size: 12px; font-weight: 700; color: #1a2a1a; line-height: 1.5; }
+    .yt-placeholder { aspect-ratio: 16/9; background: linear-gradient(135deg,#0dc5d9,#0a1e38); display: flex; align-items: center; justify-content: center; font-size: 36px; }
+
+    /* YouTubeモーダル */
+    .yt-modal { display: none; position: fixed; inset: 0; z-index: 600; background: rgba(0,0,0,.88); align-items: center; justify-content: center; padding: 20px; }
+    .yt-modal.open { display: flex; }
+    .yt-modal-inner { position: relative; width: 100%; max-width: 860px; aspect-ratio: 16/9; }
+    .yt-modal-inner iframe { width: 100%; height: 100%; border: none; border-radius: 8px; }
+    .yt-modal-close { position: absolute; top: -40px; right: 0; color: white; font-size: 26px; font-weight: 900; cursor: pointer; background: none; border: none; }
+
+    @media(max-width:960px) { .yt-grid{grid-template-columns:1fr 1fr} }
+    @media(max-width:600px) { .yt-grid{grid-template-columns:1fr} .hero-header-logo span{display:none} }
+  </style>
+</head>
+<body>
+
+<!-- mobile-menu（ハンバーガー用） -->
+<div id="mobile-menu"></div>
+
+<!-- ━━━ HERO ━━━ -->
+<section class="hero" id="home">
+  <div class="hero-slides" id="hero-slides"></div>
+  <div class="hero-dots"   id="hero-dots"></div>
+
+    <!-- コンテンツ（前面固定） -->
+  <div class="hero-content">
+    <img src="images/top-logo.png" alt="琉球の風" class="hero-logo-img" onerror="this.style.display='none'">
+    <p class="hero-catch"><span>沖縄</span>と<span>群馬</span>の夢の共演！</p>
+    <p class="hero-catch-sub">琉球の鼓動が、群馬を揺らす</p>
+    <div class="hero-ribbon">● Okinawa × Gunma ●</div>
+    <!-- 金の波ライン -->
+    <div class="hero-gold-line">
+      <svg viewBox="0 0 520 22" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c8963a" stop-opacity="0"/>
+            <stop offset="20%" stop-color="#c8963a" stop-opacity=".8"/>
+            <stop offset="50%" stop-color="#f0d080" stop-opacity="1"/>
+            <stop offset="80%" stop-color="#c8963a" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#c8963a" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M0,11 C65,2 130,20 195,11 C260,2 325,20 390,11 C455,2 490,16 520,11" stroke="url(#gg)" stroke-width="2" fill="none"/>
+        <path d="M260,4 L266,9 L260,14 L254,9 Z" fill="#c8963a" opacity=".7"/>
+      </svg>
+    </div>
+    <div class="hero-date" id="hero-date"></div>
+    <div class="hero-banners">
+      <a href="pages/ticket.html" class="hero-btn amber">
+          <span class="btn-label" style="font-size:18px;font-weight:900;letter-spacing:2px;">🎫チケット購入</span>
+          <span class="btn-sub" style="font-size:11px;">— Tickets —</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,30 C240,60 480,0 720,32 C960,60 1200,8 1440,36 L1440,60 L0,60 Z" fill="rgba(250,246,238,.5)"/>
+      <path d="M0,42 C320,14 640,56 960,38 C1120,28 1300,50 1440,36 L1440,60 L0,60 Z" fill="rgba(250,246,238,.85)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ━━━ NEWS ━━━ -->
+<section id="news">
+  <div class="container">
+    <div class="reveal">
+      <div class="news-section-title">NEWS <span>— 新着情報 —</span></div>
+      <div class="news-divider"></div>
+    </div>
+    <div class="news-list reveal" id="news-list"></div>
+    <div style="text-align:center;margin-top:22px;" class="reveal">
+      <a href="pages/news.html" class="btn btn-outline">新着情報の一覧はこちら →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ PICKUP（アーティスト決まったら表示） ━━━ -->
+<section id="pickup" style="display:none;">
+  <div class="container">
+    <p class="section-label reveal">Pick Up</p>
+    <h2 class="section-title reveal">注目<em>アーティスト</em></h2>
+    <div class="carousel-wrap reveal" style="margin-top:28px;">
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="pickup-track" style="gap:16px;"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="pickup-prev">&#8592;</button>
+        <div class="carousel-dots" id="pickup-dots"></div>
+        <button class="carousel-btn" id="pickup-next">&#8594;</button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px;" class="reveal">
+      <a href="pages/lineup.html" class="btn btn-secondary">出演者を全員見る →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ MENU（各ページへ） ━━━ -->
+<section id="menu-nav">
+  <div class="container">
+    <p class="section-label reveal">各ページへ</p>
+    <h2 class="section-title reveal">Cont<em>ents</em></h2>
+    <div class="page-link-grid reveal">
+      <a href="pages/lineup.html"  class="page-link-card"><div class="page-link-thumb">🎤</div><div class="page-link-body"><h3>出演アーティスト</h3><p>ヘッドライナー・出演団体</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/schedule.html" class="page-link-card"><div class="page-link-thumb">📋</div><div class="page-link-body"><h3>タイムテーブル</h3><p>出演時間・ステージ情報</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/ticket.html"  class="page-link-card"><div class="page-link-thumb">🎟️</div><div class="page-link-body"><h3>チケット</h3><p>料金・エリア・購入方法</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/food.html"    class="page-link-card"><div class="page-link-thumb">🥢</div><div class="page-link-body"><h3>飲食・出店</h3><p>沖縄グルメ集結</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/goods.html"   class="page-link-card"><div class="page-link-thumb">👕</div><div class="page-link-body"><h3>グッズ</h3><p>公式グッズ</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/sponsor.html" class="page-link-card"><div class="page-link-thumb">🤝</div><div class="page-link-body"><h3>スポンサー</h3><p>協賛企業様</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/access.html"  class="page-link-card"><div class="page-link-thumb">🗺️</div><div class="page-link-body"><h3>アクセス</h3><p>高崎市もてなし広場</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/news.html"    class="page-link-card"><div class="page-link-thumb">📰</div><div class="page-link-body"><h3>ニュース</h3><p>最新情報をチェック</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ GALLERY ━━━ -->
+<section id="gallery">
+  <div class="container">
+    <div class="reveal">
+      <div class="news-section-title">GALLERY <span>— ギャラリー —</span></div>
+      <div class="news-divider"></div>
+      <p class="sec-lead">過去のイベントの様子をご覧ください</p>
+    </div>
+    <div class="carousel-wrap reveal" style="margin-top:20px;">
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="gallery-track" style="gap:12px;"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="gallery-prev">&#8592;</button>
+        <div class="carousel-dots" id="gallery-dots"></div>
+        <button class="carousel-btn" id="gallery-next">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ━━━ ARCHIVE（過去の軌跡） ━━━ -->
+<section id="archive">
+  <div class="container">
+    <div class="reveal">
+      <div class="news-section-title">ARCHIVE <span>— 過去の軌跡 —</span></div>
+      <div class="news-divider"></div>
+    </div>
+    <div class="yt-grid reveal" id="yt-grid"></div>
+  </div>
+</section>
+<div class="yt-modal" id="yt-modal">
+  <div class="yt-modal-inner">
+    <button class="yt-modal-close" id="yt-close">✕</button>
+    <iframe id="yt-iframe" allow="autoplay" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ━━━ SNS ━━━ -->
+<section id="sns">
+  <div class="container">
+    <p class="section-label reveal">Follow Us</p>
+    <h2 class="section-title reveal">公式 <em>SNS</em></h2>
+    <div class="sns-cards reveal">
+      <a href="https://www.instagram.com/ryukyuno_kaze?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" class="sns-card">
+        <img src="images/instagram-icon.png" alt="Instagram" onerror="this.outerHTML='<div style=\'font-size:48px\'>📸</div>'">
+        <div class="sns-card-name">Instagram</div>
+        <div class="sns-card-handle">@ryukyuno_kaze</div>
+        <div class="sns-card-desc">イベントの最新情報・写真を投稿中</div>
+      </a>
+      <a href="https://line.me/R/ti/p/@wyw1714s" target="_blank" rel="noopener" class="sns-card">
+        <img src="images/lineicon.png" alt="LINE" onerror="this.outerHTML='<div style=\'font-size:48px\'>💬</div>'">
+        <div class="sns-card-name">LINE 公式アカウント</div>
+        <div class="sns-card-handle">@wyw1714s</div>
+        <div class="sns-card-desc">お知らせ・チケット情報をLINEでお届け</div>
+        <img src="images/line-add.png" alt="友だち追加" style="height:34px;width:auto;margin-top:4px;" onerror="this.style.display='none'">
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- フッター（JS生成） -->
+<footer id="site-footer" data-page="top"></footer>
+<button id="back-to-top" title="ページトップへ">↑</button>
+
+<script src="js/data.js"></script>
+<script src="js/common.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var f = SITE_DATA.festival;
+
+  /* ── ヒーロースライドショー ── */
+  (function() {
+    var slides   = SITE_DATA.heroSlides || [];
+    var wrap     = document.getElementById('hero-slides');
+    var dotsWrap = document.getElementById('hero-dots');
+    if (!wrap || !slides.length) return;
+    var current = 0;
+    var slideEls = slides.map(function(s,i) {
+      var el = document.createElement('div');
+      el.className = 'hero-slide' + (i===0?' active':'');
+      if (s.src) {
+        el.style.backgroundImage = "url('"+s.src+"')";
+      }
+      el.style.background = (s.src ? "url('"+s.src+"') center/cover no-repeat, " : '') + (s.color||'linear-gradient(135deg,#0dc5d9,#0a1e38)');
+      wrap.appendChild(el);
+      return el;
+    });
+    var dotEls = slides.length>1 ? slides.map(function(_,i) {
+      var d=document.createElement('div'); d.className='hero-dot'+(i===0?' active':'');
+      d.addEventListener('click',function(){goTo(i);reset();});
+      dotsWrap.appendChild(d); return d;
+    }) : [];
+    function goTo(n) {
+      slideEls[current].classList.remove('active');
+      if(dotEls[current]) dotEls[current].classList.remove('active');
+      current=(n+slides.length)%slides.length;
+      slideEls[current].classList.add('active');
+      if(dotEls[current]) dotEls[current].classList.add('active');
+    }
+    var timer;
+    function reset() { clearInterval(timer); if(slides.length>1) timer=setInterval(function(){goTo(current+1);},SITE_DATA.heroAutoplay||5000); }
+    reset();
+    var sx=0;
+    wrap.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+    wrap.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){goTo(current+(dx<0?1:-1));reset();}},{passive:true});
+  })();
+
+  /* ── 日程バッジ ── */
+  var db = document.getElementById('hero-date');
+  if (db) db.innerHTML = '<strong>'+f.date+'</strong>　'+f.openTime+' / '+f.startTime+'<br>'+f.venue;
+
+  /* ── ニュース ── */
+  var nl = document.getElementById('news-list');
+  var news = SITE_DATA.news || [];
+  if (nl) {
+    nl.innerHTML = news.slice(0,3).map(function(n) {
+      return '<a href="'+(n.link||'#')+'" class="news-item">'+
+        '<span class="news-date">'+n.date+'</span>'+
+        '<span class="news-badge '+(n.badge==='INFO'?'INFO':n.badge==='UPDATE'?'UPDATE':'')+'">'+n.badge+'</span>'+
+        '<div><p class="news-title">'+n.title+'</p>'+(n.body?'<p class="news-body">'+n.body+'</p>':'')+'</div></a>';
+    }).join('') || '<p style="padding:24px 0;color:#888;">ニュースはまだありません</p>';
+  }
+
+  /* ── PICKUP（アーティスト決定後に自動表示） ── */
+  var artists = SITE_DATA.pickup && SITE_DATA.pickup.length
+  ? SITE_DATA.pickup          // pickupにデータがあればそちらを使う
+  : SITE_DATA.artists || [];  // なければartistsを使う
+  var pu = document.getElementById('pickup');
+  var pt = document.getElementById('pickup-track');
+  if (artists.length && pu && pt) {
+    pu.style.display = 'block';
+    pt.innerHTML = artists.map(function(a) {
+      var hasUrl = a.url ? true : false;
+      var photoAttr = hasUrl ? ' data-hp="' + a.url + '" style="cursor:pointer;"' : '';
+      var photoContent = a.photo
+        ? '<img src="' + a.photo + '" alt="' + a.name + '">'
+        : '<span>' + (a.emoji || '🎤') + '</span>';
+      return '<div class="artist-card" style="flex:0 0 calc(33.333% - 11px);">' +
+        '<div class="artist-photo"' + photoAttr + '>' + photoContent + '</div>' +
+        '<div class="artist-info">' +
+          '<span class="artist-badge">HEADLINER</span>' +
+          '<div class="artist-time">' + (a.time || '') + '</div>' +
+          '<a href="pages/lineup.html" style="display:block;font-size:15px;font-weight:700;color:var(--dark);">' + a.name + '</a>' +
+          '<div class="artist-genre">' + (a.genre || '') + '</div>' +
+        '</div></div>';
+    }).join('');
+    pt.addEventListener('click', function(e) {
+      var ph = e.target.closest('[data-hp]');
+      if (ph && ph.dataset.hp) window.open(ph.dataset.hp, '_blank');
+    });
+    initCarousel({trackId:'pickup-track',prevId:'pickup-prev',nextId:'pickup-next',dotsId:'pickup-dots',perView:3});
+  }
+
+  /* ── ギャラリー（アーティスト決定後に自動表示） ── */
+  var artists = SITE_DATA.artists || [];
+  var pu = document.getElementById('pickup');
+  var pt = document.getElementById('pickup-track');
+  if (artists.length && pu && pt) {
+    pu.style.display = 'block';
+    pt.innerHTML = artists.map(function(a) {
+      return (function() {
+        var hp = a.url ? ' data-hp="' + a.url + '" style="cursor:pointer;"' : '';
+        var ph = a.photo ? '<img src="' + a.photo + '" alt="' + a.name + '">' : '<span>' + (a.emoji || '🎤') + '</span>';
+        return '<div class="artist-card" style="flex:0 0 calc(33.333% - 11px);">' +
+          '<div class="artist-photo"' + hp + '>' + ph + '</div>' +
+          '<div class="artist-info">' +
+            '<span class="artist-badge">HEADLINER</span>' +
+            '<div class="artist-time">' + (a.time || '') + '</div>' +
+            '<a href="pages/lineup.html" style="display:block;font-size:15px;font-weight:700;color:var(--dark);">' + a.name + '</a>' +
+            '<div class="artist-genre">' + (a.genre || '') + '</div>' +
+          '</div></div>';
+      })();
+    }).join('');
+    initCarousel({trackId:'pickup-track',prevId:'pickup-prev',nextId:'pickup-next',dotsId:'pickup-dots',perView:3});
+  }
+
+  /* ── ギャラリー ── */
+  var gt = document.getElementById('gallery-track');
+  if (gt) {
+    var gallery = SITE_DATA.gallery || [];
+    gt.innerHTML = gallery.map(function(g) {
+      return '<div class="gallery-item" style="flex:0 0 calc(33.333% - 8px)">'+
+        (g.src?'<img src="'+g.src+'" alt="'+g.alt+'">':
+          '<div class="gallery-placeholder" style="background:'+g.color+'"><span class="g-icon">'+g.emoji+'</span><span class="g-label">'+g.alt+'</span></div>')+
+        '</div>';
+    }).join('');
+    if (gallery.length) initCarousel({trackId:'gallery-track',prevId:'gallery-prev',nextId:'gallery-next',dotsId:'gallery-dots',perView:3});
+  }
+
+  /* ── YouTube ── */
+  var yg = document.getElementById('yt-grid');
+  if (yg) {
+    var vids = SITE_DATA.youtubeVideos || [];
+    yg.innerHTML = vids.map(function(v) {
+      return '<div class="yt-card" onclick="openYT(\''+v.id+'\')" style="cursor:pointer;">'+
+        (v.id
+          ? '<div class="yt-thumb"><img src="https://img.youtube.com/vi/'+v.id+'/mqdefault.jpg" alt="'+v.title+'"><div class="yt-play"><div class="yt-play-btn"></div></div></div>'
+          : '<div class="yt-placeholder">🎬</div>')+
+        '<div class="yt-info"><div class="yt-year">'+v.year+'</div><div class="yt-title">'+v.title+'</div></div></div>';
+    }).join('') || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#888;">動画は決まり次第公開します</div>';
+  }
+  window.openYT = function(id) {
+    if (!id) return;
+    document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/'+id+'?autoplay=1';
+    document.getElementById('yt-modal').classList.add('open');
+  };
+  document.getElementById('yt-close').onclick = function() {
+    document.getElementById('yt-modal').classList.remove('open');
+    document.getElementById('yt-iframe').src = '';
+  };
+  document.getElementById('yt-modal').onclick = function(e) {
+    if (e.target===this) { this.classList.remove('open'); document.getElementById('yt-iframe').src=''; }
+  };
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINE UP | 第3回 琉球の風〜沖縄祭りIN高崎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  
+</head>
+<body class="subpage">
+
+<header id="site-header"></header>
+<div id="mobile-menu"></div>
+
+<div class="page-hero">
+  <div class="page-hero-content">
+    <h1 class="page-title-en">LINE UP</h1>
+    <p class="page-title-ja"> \ 出演アーティスト /</p>
+  </div>
+</div>
+
+
+<section class="glass-section">
+  <div class="container">
+    <p class="section-label reveal">Headline Artist</p>
+    <h2 class="section-title reveal">HEADLINE <em>ARTISTS</em></h2>
+    <p class="section-lead reveal">メインステージを彩るヘッドライナー</p>
+    <div class="carousel-wrap reveal" style="margin-top:28px;">
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="headline-track" style="gap:16px;"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="hl-prev">&#8592;</button>
+        <div class="carousel-dots" id="hl-dots"></div>
+        <button class="carousel-btn" id="hl-next">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="glass-section-alt">
+  <div class="container">
+    <p class="section-label reveal">Performers</p>
+    <h2 class="section-title reveal">🌺 <em>Performers</em></h2>
+    <p class="section-lead reveal">沖縄の文化・伝統を継承するローカルアーティスト</p>
+    <div class="performer-grid reveal" id="performer-grid"></div>
+  </div>
+</section>
+
+<!-- アーティストモーダル -->
+<div class="modal-overlay" id="artist-modal">
+  <div class="modal-box">
+    <button class="modal-close" id="artist-modal-close">✕</button>
+    <div id="artist-modal-photo" class="artist-modal-photo">🎤</div>
+    <div class="artist-modal-name" id="artist-modal-name"></div>
+    <div class="artist-modal-genre" id="artist-modal-genre"></div>
+    <div class="artist-modal-time" id="artist-modal-time"></div>
+    <p class="artist-modal-profile" id="artist-modal-profile"></p>
+    <a href="#" id="artist-modal-hp" class="artist-modal-hp" target="_blank" rel="noopener" style="display:none;">
+      🌐 公式サイトへ →
+    </a>
+  </div>
+</div>
+
+<footer id="site-footer"></footer>
+<button id="back-to-top" title="ページトップへ">↑</button>
+
+<script src="../js/data.js"></script>
+<script src="../js/common.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var artists    = SITE_DATA.artists    || [];
+  var performers = SITE_DATA.performers || [];
+  var modal      = document.getElementById('artist-modal');
+  var modalClose = document.getElementById('artist-modal-close');
+
+  function openArtistModal(a) {
+    var photoEl = document.getElementById('artist-modal-photo');
+    photoEl.innerHTML = a.photo
+      ? '<img src="../'+a.photo+'" alt="'+a.name+'" style="width:100%;border-radius:8px;">'
+      : a.emoji || '🎤';
+    document.getElementById('artist-modal-name').textContent    = a.name;
+    document.getElementById('artist-modal-genre').textContent   = a.genre || '';
+    document.getElementById('artist-modal-time').textContent    = (a.time||'') + (a.stage ? '　'+a.stage : '');
+    document.getElementById('artist-modal-profile').textContent = a.profile || '';
+    var hp = document.getElementById('artist-modal-hp');
+    if (a.url) { hp.href = a.url; hp.style.display = 'inline-flex'; }
+    else        { hp.style.display = 'none'; }
+    modal.classList.add('open');
+  }
+  if (modalClose) modalClose.onclick = function() { modal.classList.remove('open'); };
+  if (modal) modal.onclick = function(e) { if (e.target===this) this.classList.remove('open'); };
+
+  var ht = document.getElementById('headline-track');
+  if (artists.length) {
+    ht.innerHTML = artists.map(function(a, i) {
+      return '<div class="artist-card" style="flex:0 0 calc(33.333% - 11px);">'+
+        '<div class="artist-photo" data-idx="'+i+'" data-hp="'+(a.url||'')+'" style="'+(a.url?'cursor:pointer;':'')+'">' +
+          (a.photo ? '<img src="../'+a.photo+'" alt="'+a.name+'">' : '<span>'+(a.emoji||'🎤')+'</span>') +
+        '</div>'+
+        '<div class="artist-info">'+
+          '<span class="artist-badge">HEADLINER</span>'+
+          '<div class="artist-time">'+(a.time||'')+'</div>'+
+          '<button class="artist-name-btn" data-modal-idx="'+i+'">'+a.name+'</button>'+
+          '<div class="artist-genre">'+(a.genre||'')+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+
+    // 写真クリック → HP
+    ht.addEventListener('click', function(e) {
+      var ph = e.target.closest('[data-hp]');
+      if (ph && ph.dataset.hp) { window.open(ph.dataset.hp, '_blank'); return; }
+      // 名前クリック → モーダル
+      var nb = e.target.closest('[data-modal-idx]');
+      if (nb) { openArtistModal(artists[parseInt(nb.dataset.modalIdx)]); }
+    });
+    initCarousel({trackId:'headline-track',prevId:'hl-prev',nextId:'hl-next',dotsId:'hl-dots',perView:3});
+  } else {
+    ht.closest('.carousel-wrap').innerHTML = '<div class="coming-soon"><span class="coming-soon-icon">🌊</span><h3>COMING SOON</h3><p>出演者は決まり次第公開します！</p></div>';
+  }
+
+  var pg = document.getElementById('performer-grid');
+  if (performers.length) {
+    pg.innerHTML = performers.map(function(p) {
+      return '<a href="'+(p.url||'#')+'" target="_blank" rel="noopener" class="performer-card">'+
+        '<div class="performer-photo">'+(p.photo?'<img src="../'+p.photo+'" alt="'+p.name+'">':'<span>'+(p.emoji||'🌺')+'</span>')+'</div>'+
+        '<div class="performer-info"><div class="performer-name">'+p.name+'</div><div class="performer-genre">'+(p.genre||'')+'</div></div>'+
+      '</a>';
+    }).join('');
+  } else {
+    pg.innerHTML = '<div class="coming-soon" style="grid-column:1/-1"><span class="coming-soon-icon">🌺</span><h3>COMING SOON</h3><p>出演団体は決まり次第公開します。</p></div>';
+  }
+});
+</script>
+</body>
+</html>
