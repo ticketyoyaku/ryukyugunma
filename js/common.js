@@ -295,6 +295,16 @@ document.addEventListener('DOMContentLoaded', function() {
   ticketBtn.href = (isTop ? '' : '../') + 'pages/ticket.html';
   ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
   document.body.appendChild(ticketBtn);
+  // トップ画像を過ぎたら表示
+ticketBtn.style.display = 'none';
+window.addEventListener('scroll', function() {
+  var heroH = window.innerHeight;
+  if (window.scrollY > heroH) {
+    ticketBtn.style.display = 'flex';
+  } else {
+    ticketBtn.style.display = 'none';
+  }
+}, { passive: true });
 
   /* ━━━ ページトップボタン ━━━ */
   var topBtn = document.getElementById('back-to-top');
