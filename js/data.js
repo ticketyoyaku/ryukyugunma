@@ -211,10 +211,10 @@ pickup: [
     // 写真がない場合は色（color）と絵文字（emoji）で表示されます
     { src: "images/gallery/gallery1.jpg", alt: "ステージの様子",      emoji: "🎤", color: "linear-gradient(135deg,#0096c7,#023e8a)" },
     { src: "images/gallery/gallery2.jpg", alt: "エイサー演舞",         emoji: "🥁", color: "linear-gradient(135deg,#06d6a0,#0096c7)" },
-    { src: "images/gallery/gallery3.JPG", alt: "琉球舞踊",             emoji: "🌺", color: "linear-gradient(135deg,#ffd166,#ff8e53)" },
+    { src: "images/gallery/gallery3.jpg", alt: "琉球舞踊",             emoji: "🌺", color: "linear-gradient(135deg,#ffd166,#ff8e53)" },
     { src: "images/gallery/gallery4.png", alt: "フードエリア",         emoji: "🥢", color: "linear-gradient(135deg,#48cae4,#06d6a0)" },
     { src: "images/gallery/gallery5.png", alt: "お客様の様子",         emoji: "😊", color: "linear-gradient(135deg,#ff6b6b,#ffd166)" },
-    { src: "images/gallery/gallery6.JPG", alt: "高崎もてなし広場の夜", emoji: "🌙", color: "linear-gradient(135deg,#03045e,#0077b6)" },
+    { src: "images/gallery/gallery6.jpg", alt: "高崎もてなし広場の夜", emoji: "🌙", color: "linear-gradient(135deg,#03045e,#0077b6)" },
     // ↓ 写真を増やすときはこの行をコピーして追加
     // { src: "images/gallery/gallery7.jpg", alt: "写真の説明", emoji: "🌊", color: "linear-gradient(135deg,#0dc5d9,#023e8a)" },
   ],
