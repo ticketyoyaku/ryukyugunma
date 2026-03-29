@@ -296,15 +296,17 @@ document.addEventListener('DOMContentLoaded', function() {
   ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
   document.body.appendChild(ticketBtn);
   // トップ画像を過ぎたら表示
-ticketBtn.style.display = 'none';
-window.addEventListener('scroll', function() {
-  var heroH = window.innerHeight;
-  if (window.scrollY > heroH) {
-    ticketBtn.style.display = 'flex';
-  } else {
-    ticketBtn.style.display = 'none';
-  }
-}, { passive: true });
+if (isTop) {
+  // トップページはスクロール後に表示
+  ticketBtn.style.display = 'none';
+  window.addEventListener('scroll', function() {
+    ticketBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+  }, { passive: true });
+} else {
+  // 他のページは最初から表示
+  ticketBtn.style.display = 'flex';
+}
+
 
   /* ━━━ ページトップボタン ━━━ */
   var topBtn = document.getElementById('back-to-top');
