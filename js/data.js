@@ -187,7 +187,7 @@ pickup: [
     },
   ],
   ticketUrls: {
-    officialForm: "https://t.pia.jp/",   // ← 公式フォームURL
+    officialForm: "https://ryukyunokaze.github.io/ryukyunokaze-2026/index.html",   // ← 公式フォームURL
     pia:          "https://t.pia.jp/",   // ← チケットぴあURL
   },
   ticketNotes: [
