@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 固定チケットボタンを全ページに追加
   var ticketBtn = document.createElement('a');
   ticketBtn.className = 'fixed-ticket-btn';
-  ticketBtn.href = (isTop ? '' : '../') + 'pages/ticket.html';
+  ticketBtn.href = (isTop ? 'pages/ticket.html' : '../pages/ticket.html');
   ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
   document.body.appendChild(ticketBtn);
   // トップ画像を過ぎたら表示
