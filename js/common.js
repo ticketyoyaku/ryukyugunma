@@ -289,21 +289,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
 
-  // 固定チケットボタンを全ページに追加
-  var ticketBtn = document.createElement('a');
-  ticketBtn.className = 'fixed-ticket-btn';
-  ticketBtn.href = '/ryukyugunma/pages/ticket.html';
-  ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
-  document.body.appendChild(ticketBtn);
-  // トップ画像を過ぎたら表示
+// 固定チケットボタンを全ページに追加
+var ticketBtn = document.createElement('a');
+ticketBtn.className = 'fixed-ticket-btn';
+ticketBtn.href = (isTop ? '' : '../') + 'pages/ticket.html';
+ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
+document.body.appendChild(ticketBtn);
+
+// トップページはスクロール後に表示
+ticketBtn.style.display = 'none';
 if (isTop) {
-  // トップページはスクロール後に表示
-  ticketBtn.style.display = 'none';
   window.addEventListener('scroll', function() {
-    ticketBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    ticketBtn.style.display = window.scrollY > 600 ? 'flex' : 'none';
   }, { passive: true });
 } else {
-  // 他のページは最初から表示
   ticketBtn.style.display = 'flex';
 }
 
