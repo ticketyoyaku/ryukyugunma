@@ -74,7 +74,17 @@
     .hero-btn.orange { background:linear-gradient(135deg,#fff27fe1,#fff128a8); box-shadow:0 4px 14px rgba(232,69,42,.4); }
     .hero-btn.orange:hover { box-shadow:0 8px 24px rgba(232,69,42,.55); }
     .hero-btn.amber  { background:linear-gradient(135deg,#ea66fc9d,#ff2bffb6); box-shadow:0 4px 14px rgba(200,150,58,.4); }
-    .hero-btn.amber:hover  { box-shadow:0 8px 24px rgba(200,150,58,.55); }
+    .hero-btn.amber { position: relative; overflow: hidden; }
+    .hero-btn.amber::after {  content: '';  position: absolute;  top: -50%; right: -50%;  width: 40%; height: 200%;
+    background: linear-gradient(to bottom left, rgba(255,255,255,0), rgba(255,255,255,.7), rgba(255,255,255,0));
+    transform: skewX(15deg);
+  animation: amberShine 2.5s ease-in-out infinite;
+}
+@keyframes amberShine {
+  0%   { right: -50%; top: -50%; }
+  50%  { right: 120%; top: 120%; }
+  100% { right: 120%; top: 120%; }
+}
     .hero-btn .btn-label { font-size: 14px; }
     .hero-btn .btn-sub   { font-size: 10px; opacity: .85; letter-spacing: 1.5px; }
     .hero-btn .btn-icon  { font-size: 18px; }
@@ -288,6 +298,12 @@
       </a>
     </div>
   </div>
+  <!-- インスタ投稿フィード -->
+　<div style="max-width:900px; margin: 30px auto 0;">
+  <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+  <script src="https://elfsightcdn.com/platform.js" async></script>
+  <div class="elfsight-app-b16d8b85-d924-44b4-bfa0-85a7b287a8fd" data-elfsight-app-lazy></div>
+</div>
 </section>
 
 <!-- フッター（JS生成） -->
