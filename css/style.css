@@ -424,7 +424,7 @@ section { padding: 72px 0; }
 }
 .page-link-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(200,150,58,.2); }
 .page-link-thumb { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 40px; background: rgba(250,246,238,.8); border-bottom: 1px solid rgba(200,150,58,.15); }
-.page-link-body { padding: 12px 14px 14px; flex: 1; background: linear-gradient(135deg, #0a1e38, #0d2a4a); display: flex; flex-direction: column; }
+.page-link-body { padding: 12px 14px 14px; flex: 1; background: linear-gradient(135deg, #0dc5d9, #0099b0); display: flex; flex-direction: column; }
 .page-link-body h3 { font-size: 13px; font-weight: 700; color: white; margin-bottom: 3px; }
 .page-link-body p  { font-size: 10px; color: rgba(255,255,255,.7); line-height: 1.5; }
 .page-link-arrow   { font-size: 10px; color: var(--goldf); margin-top: auto; padding-top: 8px; display: block; text-align: right; }
