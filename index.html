@@ -10,7 +10,7 @@
   <style>
     /* ━━━ HERO ━━━ */
     .hero {
-      position: relative; min-height: 100vh; overflow: hidden;
+      position: relative; min-height: 100vh;
       display: flex; flex-direction: column; align-items: center;
     }
     /* スライドショー（全画面・背景の後ろ） */
@@ -135,6 +135,65 @@
 
     @media(max-width:960px) { .yt-grid{grid-template-columns:1fr 1fr} }
     @media(max-width:600px) { .yt-grid{grid-template-columns:1fr} .hero-header-logo span{display:none} }
+
+    .hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hero-video-iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56.25vh;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 177.78vw;
+  border: none;
+}
+
+#hero-ticket-btn {
+  position: fixed !important;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 400;
+  min-width: 160px;
+  justify-content: center;
+  padding: 10px 24px;
+  animation: ticketPulse 2s ease-in-out infinite;
+  overflow: hidden;
+}
+
+#hero-ticket-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgba(255,255,255,.6),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: ticketShine 2.5s ease-in-out infinite;
+}
+
+@keyframes ticketShine {
+  0%   { left: -75%; }
+  100% { left: 150%; }
+}
+
+@keyframes ticketPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(234,102,252,.5); }
+  50%      { box-shadow: 0 4px 32px rgba(234,102,252,.9); }
+}
   </style>
 </head>
 <body>
@@ -144,8 +203,9 @@
 
 <!-- ━━━ HERO ━━━ -->
 <section class="hero" id="home">
-  <div class="hero-slides" id="hero-slides"></div>
-  <div class="hero-dots"   id="hero-dots"></div>
+  <div class="hero-video-wrap">
+  <iframe src="https://www.youtube.com/embed/9txzlTR9UK8?autoplay=1&mute=1&loop=1&playlist=9txzlTR9UK8&controls=0&showinfo=0&rel=0&playsinline=1" frameborder="0" allow="autoplay; fullscreen" allowfullscreen class="hero-video-iframe"></iframe>
+</div>
 
     <!-- コンテンツ（前面固定） -->
   <div class="hero-content">
@@ -170,11 +230,9 @@
       </svg>
     </div>
     <div class="hero-date" id="hero-date"></div>
-    <div class="hero-banners">
-      <a href="pages/ticket.html" class="hero-btn amber">
-          <span class="btn-label" style="font-size:18px;font-weight:900;letter-spacing:2px;">🎫チケット購入</span>
-          <span class="btn-sub" style="font-size:11px;">— Tickets —</span>
-      </a>
+　　</div><!-- hero-content終わり -->
+
+　　<div class="hero-wave">
     </div>
   </div>
 
@@ -230,7 +288,8 @@
       <a href="pages/lineup.html"  class="page-link-card"><div class="page-link-thumb">🎤</div><div class="page-link-body"><h3>出演アーティスト</h3><p>ヘッドライナー・出演団体</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
       <a href="pages/schedule.html" class="page-link-card"><div class="page-link-thumb">📋</div><div class="page-link-body"><h3>タイムテーブル</h3><p>出演時間・ステージ情報</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
       <a href="pages/ticket.html"  class="page-link-card"><div class="page-link-thumb">🎟️</div><div class="page-link-body"><h3>チケット</h3><p>料金・エリア・購入方法</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
-      <a href="pages/food.html"    class="page-link-card"><div class="page-link-thumb">🥢</div><div class="page-link-body"><h3>飲食・出店</h3><p>沖縄グルメ集結</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/food.html"    class="page-link-card"><div class="page-link-thumb">🥢</div><div class="page-link-body"><h3>飲食</h3><p>沖縄グルメ集結</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
+      <a href="pages/shop.html"    class="page-link-card"><div class="page-link-thumb">🏪</div><div class="page-link-body"><h3>出店</h3><p>出店・ブース情報</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
       <a href="pages/goods.html"   class="page-link-card"><div class="page-link-thumb">👕</div><div class="page-link-body"><h3>グッズ</h3><p>公式グッズ</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
       <a href="pages/sponsor.html" class="page-link-card"><div class="page-link-thumb">🤝</div><div class="page-link-body"><h3>スポンサー</h3><p>協賛企業様</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
       <a href="pages/access.html"  class="page-link-card"><div class="page-link-thumb">🗺️</div><div class="page-link-body"><h3>アクセス</h3><p>高崎市もてなし広場</p><span class="page-link-arrow" style="text-align:right;display:block;margin-top:auto;">詳しく見る →</span></div></a>
@@ -283,20 +342,16 @@
     <p class="section-label reveal">Follow Us</p>
     <h2 class="section-title reveal">公式 <em>SNS</em></h2>
     <div class="sns-cards reveal">
-      <a href="https://www.instagram.com/ryukyuno_kaze?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" class="sns-card">
-        <img src="images/instagram-icon.png" alt="Instagram" onerror="this.outerHTML='<div style=\'font-size:48px\'>📸</div>'">
-        <div class="sns-card-name">Instagram</div>
-        <div class="sns-card-handle">@ryukyuno_kaze</div>
-        <div class="sns-card-desc">イベントの最新情報・写真を投稿中</div>
-      </a>
-      <a href="https://line.me/R/ti/p/@wyw1714s" target="_blank" rel="noopener" class="sns-card">
-        <img src="images/lineicon.png" alt="LINE" onerror="this.outerHTML='<div style=\'font-size:48px\'>💬</div>'">
-        <div class="sns-card-name">LINE 公式アカウント</div>
-        <div class="sns-card-handle">@wyw1714s</div>
-        <div class="sns-card-desc">お知らせ・チケット情報をLINEでお届け</div>
-        <img src="images/line-add.png" alt="友だち追加" style="height:34px;width:auto;margin-top:4px;" onerror="this.style.display='none'">
-      </a>
+  <a href="https://line.me/R/ti/p/@wyw1714s" target="_blank" rel="noopener" class="sns-card sns-card-line">
+    <div class="sns-card-icon-wrap sns-card-icon-line">
+      <img src="images/lineicon.png" alt="LINE" onerror="this.outerHTML='<div style=\'font-size:48px\'>💬</div>'">
     </div>
+    <div class="sns-card-name">LINE 公式アカウント</div>
+    <div class="sns-card-handle">@wyw1714s</div>
+    <div class="sns-card-desc">お知らせ・チケット情報をLINEでお届け</div>
+    <img src="images/line-add.png" alt="友だち追加" style="height:34px;width:auto;margin-top:8px;" onerror="this.style.display='none'">
+  </a>
+</div>
   </div>
   <!-- インスタ投稿フィード -->
 　<div style="max-width:900px; margin: 30px auto 0;">
@@ -310,48 +365,16 @@
 <footer id="site-footer" data-page="top"></footer>
 <button id="back-to-top" title="ページトップへ">↑</button>
 
+<a href="pages/ticket.html" class="hero-btn amber" id="hero-ticket-btn">
+  <span class="btn-label" style="font-size:18px;font-weight:900;letter-spacing:2px;">🎫チケット購入</span>
+  <span class="btn-sub" style="font-size:11px;">— Tickets —</span>
+</a>
+
 <script src="js/data.js"></script>
 <script src="js/common.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   var f = SITE_DATA.festival;
-
-  /* ── ヒーロースライドショー ── */
-  (function() {
-    var slides   = SITE_DATA.heroSlides || [];
-    var wrap     = document.getElementById('hero-slides');
-    var dotsWrap = document.getElementById('hero-dots');
-    if (!wrap || !slides.length) return;
-    var current = 0;
-    var slideEls = slides.map(function(s,i) {
-      var el = document.createElement('div');
-      el.className = 'hero-slide' + (i===0?' active':'');
-      if (s.src) {
-        el.style.backgroundImage = "url('"+s.src+"')";
-      }
-      el.style.background = (s.src ? "url('"+s.src+"') center/cover no-repeat, " : '') + (s.color||'linear-gradient(135deg,#0dc5d9,#0a1e38)');
-      wrap.appendChild(el);
-      return el;
-    });
-    var dotEls = slides.length>1 ? slides.map(function(_,i) {
-      var d=document.createElement('div'); d.className='hero-dot'+(i===0?' active':'');
-      d.addEventListener('click',function(){goTo(i);reset();});
-      dotsWrap.appendChild(d); return d;
-    }) : [];
-    function goTo(n) {
-      slideEls[current].classList.remove('active');
-      if(dotEls[current]) dotEls[current].classList.remove('active');
-      current=(n+slides.length)%slides.length;
-      slideEls[current].classList.add('active');
-      if(dotEls[current]) dotEls[current].classList.add('active');
-    }
-    var timer;
-    function reset() { clearInterval(timer); if(slides.length>1) timer=setInterval(function(){goTo(current+1);},SITE_DATA.heroAutoplay||5000); }
-    reset();
-    var sx=0;
-    wrap.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
-    wrap.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){goTo(current+(dx<0?1:-1));reset();}},{passive:true});
-  })();
 
   /* ── 日程バッジ ── */
   var db = document.getElementById('hero-date');
@@ -371,8 +394,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ── PICKUP（アーティスト決定後に自動表示） ── */
   var artists = SITE_DATA.pickup && SITE_DATA.pickup.length
-  ? SITE_DATA.pickup          // pickupにデータがあればそちらを使う
-  : SITE_DATA.artists || [];  // なければartistsを使う
+    ? SITE_DATA.pickup
+    : SITE_DATA.artists || [];
   var pu = document.getElementById('pickup');
   var pt = document.getElementById('pickup-track');
   if (artists.length && pu && pt) {
@@ -396,29 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
       var ph = e.target.closest('[data-hp]');
       if (ph && ph.dataset.hp) window.open(ph.dataset.hp, '_blank');
     });
-    initCarousel({trackId:'pickup-track',prevId:'pickup-prev',nextId:'pickup-next',dotsId:'pickup-dots',perView:3});
-  }
-
-  /* ── ギャラリー（アーティスト決定後に自動表示） ── */
-  var artists = SITE_DATA.artists || [];
-  var pu = document.getElementById('pickup');
-  var pt = document.getElementById('pickup-track');
-  if (artists.length && pu && pt) {
-    pu.style.display = 'block';
-    pt.innerHTML = artists.map(function(a) {
-      return (function() {
-        var hp = a.url ? ' data-hp="' + a.url + '" style="cursor:pointer;"' : '';
-        var ph = a.photo ? '<img src="' + a.photo + '" alt="' + a.name + '">' : '<span>' + (a.emoji || '🎤') + '</span>';
-        return '<div class="artist-card" style="flex:0 0 calc(33.333% - 11px);">' +
-          '<div class="artist-photo"' + hp + '>' + ph + '</div>' +
-          '<div class="artist-info">' +
-            '<span class="artist-badge">HEADLINER</span>' +
-            '<div class="artist-time">' + (a.time || '') + '</div>' +
-            '<a href="pages/lineup.html" style="display:block;font-size:15px;font-weight:700;color:var(--dark);">' + a.name + '</a>' +
-            '<div class="artist-genre">' + (a.genre || '') + '</div>' +
-          '</div></div>';
-      })();
-    }).join('');
     initCarousel({trackId:'pickup-track',prevId:'pickup-prev',nextId:'pickup-next',dotsId:'pickup-dots',perView:3});
   }
 
