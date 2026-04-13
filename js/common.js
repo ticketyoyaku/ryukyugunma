@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { key:'schedule', label:'TIMETABLE', file:'schedule.html' },
       { key:'ticket',   label:'TICKET',    file:'ticket.html' },
       { key:'food',     label:'FOOD',      file:'food.html' },
+      { key:'shop',     label:'SHOP',      file:'shop.html' }, 
       { key:'goods',    label:'GOODS',     file:'goods.html' },
       { key:'sponsor',  label:'SPONSOR',   file:'sponsor.html' },
       { key:'access',   label:'ACCESS',    file:'access.html' },
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
       { key:'schedule', label:'📋 TIMETABLE',  href:'pages/schedule.html' },
       { key:'ticket',   label:'🎟️ TICKET',    href:'pages/ticket.html' },
       { key:'food',     label:'🥢 FOOD',       href:'pages/food.html' },
+      { key:'shop',     label:'🏪 SHOP',       href:'pages/shop.html' },
       { key:'goods',    label:'👕 GOODS',       href:'pages/goods.html' },
       { key:'sponsor',  label:'🤝 SPONSOR',    href:'pages/sponsor.html' },
       { key:'access',   label:'🗺️ ACCESS',     href:'pages/access.html' },
@@ -195,7 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
       { href:'pages/lineup.html',     text:'出演アーティスト' },
       { href:'pages/schedule.html',   text:'タイムテーブル' },
       { href:'pages/ticket.html',     text:'チケット' },
-      { href:'pages/food.html',       text:'飲食・出店' },
+      { href:'pages/food.html',       text:'飲食' },
+      { href:'pages/shop.html',       text:'出店' },
       { href:'pages/goods.html',      text:'グッズ' },
       { href:'pages/sponsor.html',    text:'スポンサー' },
       { href:'pages/access.html',     text:'アクセス' },
@@ -289,23 +292,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
 
-// 固定チケットボタンを全ページに追加
-var ticketBtn = document.createElement('a');
-ticketBtn.className = 'fixed-ticket-btn';
-ticketBtn.href = (isTop ? '' : '../') + 'pages/ticket.html';
-ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
-document.body.appendChild(ticketBtn);
-
-// トップページはスクロール後に表示
-ticketBtn.style.display = 'none';
-if (isTop) {
-  window.addEventListener('scroll', function() {
-    ticketBtn.style.display = window.scrollY > 600 ? 'flex' : 'none';
-  }, { passive: true });
-} else {
+// 固定チケットボタン（サブページのみ表示、トップページは非表示）
+var isTopPage = !document.getElementById('site-header') || document.getElementById('site-header').dataset.page === 'top';
+if (!isTopPage) {
+  var ticketBtn = document.createElement('a');
+  ticketBtn.className = 'fixed-ticket-btn';
+  ticketBtn.href = '../pages/ticket.html';
+  ticketBtn.innerHTML = '<span class="fixed-ticket-btn-label">TICKET</span>';
   ticketBtn.style.display = 'flex';
+  document.body.appendChild(ticketBtn);
 }
-
 
   /* ━━━ ページトップボタン ━━━ */
   var topBtn = document.getElementById('back-to-top');

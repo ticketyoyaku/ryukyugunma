@@ -51,7 +51,8 @@ const SITE_DATA = {
     lineup:   true,   // アーティスト
     schedule: true,   // タイムテーブル
     ticket:   true,   // チケット
-    food:     true,   // 飲食・出店
+    food:     true,   // 飲食
+    shop:     true,
     goods:    true,   // グッズ
     sponsor:  true,   // スポンサー
     access:   true,   // アクセス
@@ -178,7 +179,7 @@ pickup: [
     {
       type:     "一般エリア",
       typeEn:   "GENERAL",
-      price:    "2,500",
+      price:    "1,500",
       note:     "",
       popular:  false,
       features: ["全ステージ入場可", "フードエリア入場可"],
@@ -200,7 +201,22 @@ pickup: [
     "入場チケットの転売および譲渡は固く禁じます。",
     "会場内は全席自由（Sエリアは優先入場）となります",
     "雨天決行ですが、荒天（台風等）により主催者が中止と判断した場合の対応については、公式サイトおよびSNSにて告知いたします。",
-  ],
+    ],
+
+    /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * 🏪 出店情報
+ * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+shopVendors: [
+  // ↓ここに追加
+  // {
+  //   name:  "お店の名前",
+  //   desc:  "商品説明",
+  //   photo: "images/shop/shop1.jpg",
+  //   url:   "https://お店のHP",
+  //   tag:   "雑貨",
+  //   emoji: "🛍️",
+  // },
+],
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    * 🖼️ ギャラリー
@@ -226,7 +242,8 @@ pickup: [
    *   例: https://youtu.be/XXXXXXXXXX → id: "XXXXXXXXXX"
    * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
   youtubeVideos: [
-    { id: "Iq_FB7NXKxE", title: "琉球の風プレイベント ダイジェスト", year: "第2回 2025" },
+    { id: "Iq_FB7NXKxE", title: "琉球の風プレイベント ダイジェスト", year: "PRE-EVENT 2025" },
+    { id: "YFs3vC0BqM8", title: "第2回 琉球の風 ダイジェスト", year: "第2回 2025" },
     { id: "53IFQtbZUFk", title: "第1回 琉球の風 ダイジェスト", year: "2024" },
     // ↓ 動画を追加するときはここに追加
     // { id: "XXXXXXXXXX", title: "タイトル", year: "第X回 20XX" },
